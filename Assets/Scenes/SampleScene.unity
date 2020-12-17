@@ -666,10 +666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f4dcc2b3aa1e3c4d85dffd4cf91fe7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cube: {fileID: 8867476056865663478, guid: ad411a6757b3b594cb9191b91acd165d, type: 3}
-  cylinder: {fileID: 9047710538079248408, guid: daf26eba0eb9f8a47be6c60456a3025e, type: 3}
-  sphere: {fileID: 1840137043169494711, guid: 37047d121d70dc040b332174420b9d0c, type: 3}
-  NumberOfUnit: 10
 --- !u!4 &349260203
 Transform:
   m_ObjectHideFlags: 0
@@ -1973,7 +1969,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1910366439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 349260202}
+        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
+        m_MethodName: SaveToDiskBinary
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1910366439
 MonoBehaviour:
   m_ObjectHideFlags: 0
