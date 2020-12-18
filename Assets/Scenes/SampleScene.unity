@@ -275,7 +275,7 @@ Transform:
   m_GameObject: {fileID: 47921303}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 100, y: 50, z: 100}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1097,8 +1097,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.21529675, y: 0.6620993, z: -0.20743263, w: -0.68719983}
-  m_LocalPosition: {x: 265.7329, y: 180.17862, z: 79.364334}
+  m_LocalRotation: {x: 0.4803592, y: 0.5193357, z: -0.48763394, w: 0.5116235}
+  m_LocalPosition: {x: -7.007375, y: 62.733734, z: -3.2727726}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1317,7 +1317,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1125492806}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 349260202}
+        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
+        m_MethodName: LoadDataFromXml
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1125492806
 MonoBehaviour:
   m_ObjectHideFlags: 0

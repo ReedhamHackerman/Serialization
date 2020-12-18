@@ -45,7 +45,7 @@ public class Spawner : MonoBehaviour
         {
             Shapes FakeShape = GenerateRandomShape();
            // FakeShape.GetComponent<Renderer>().sharedMaterial.SetColor("_Color", Random.ColorHSV());
-           FakeShape.rd.sharedMaterial.SetColor("_Color", Random.ColorHSV());
+            FakeShape.rd.sharedMaterial.SetColor("_Color", Random.ColorHSV());
             FakeShape = Instantiate(FakeShape, new Vector3(Random.Range(-10, 10), 18, Random.Range(-10, 10)), Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
             alreadyGeneratedObjects.Add(FakeShape);
         }
@@ -112,7 +112,32 @@ public class Spawner : MonoBehaviour
         }
     }
 
+    public void LoadDataFromXml()
+    {
+        List<SerializeTransform> xmlTransforms = null ;
+        System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(typeof(List<SerializeTransform>));
+       // System.Xml.Serialization.XmlSerializer b = new System.Xml.Serialization.XmlSerializer(xmlTransforms.GetType());
+        string path = Application.streamingAssetsPath + "/" + "ReedhamXml";
+        StreamReader sr = new StreamReader(path);
+        xmlTransforms = (List<SerializeTransform>) x.Deserialize(sr);
+        foreach (SerializeTransform data in xmlTransforms)
+        {
+            for (int i = 0; i < shapeNames.Count; i++)
+            {
+                if (shapeNames[i].shape == data.shape)
+                {
+                    Quaternion angle = Quaternion.Euler(new Vector3(data._rotation[0], data._rotation[1], data._rotation[2]));
+                    Vector3 position = new Vector3(data._position[0], data._position[1], data._position[2]);
+                    shapeNames[i].rb.velocity = new Vector3(data._velocity[0], data._velocity[1], data._velocity[2]);
+                    Instantiate(shapeNames[i], position, angle);
 
+                }
+            }
+        }
+
+
+
+    }
 
     private void saveDataToDisk(string filePath, object toSave)
     {
@@ -130,6 +155,7 @@ public class Spawner : MonoBehaviour
         Debug.Log("DataSavingXml");
        
         System.Xml.Serialization.XmlSerializer x = new System.Xml.Serialization.XmlSerializer(toSave.GetType());
+        
         string path = Application.streamingAssetsPath + "/" + filePath;
         FileStream file = File.Create(path);
         x.Serialize(file, toSave);
