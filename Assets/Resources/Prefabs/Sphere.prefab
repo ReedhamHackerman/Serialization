@@ -126,3 +126,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shape: 0
+  rb: {fileID: 1373217473129830356}
+  rd: {fileID: 8233622876229184239}

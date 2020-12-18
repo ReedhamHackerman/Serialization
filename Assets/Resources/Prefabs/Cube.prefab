@@ -126,9 +126,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shape: 1
-  serializeTransform:
-    _position:
-    - 0
-    - 0
-    - 0
-    _rotation: []
+  rb: {fileID: 8922457264292832537}
+  rd: {fileID: 3587119994941499628}
