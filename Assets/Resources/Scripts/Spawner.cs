@@ -14,12 +14,13 @@ public class Spawner : MonoBehaviour
     List<Shapes> shapeNames;
     List<Shapes> alreadyGeneratedObjects;
     List<SerializeTransform> savedObjects;
-
+    List<Shapes> tempShapes;
     void Start()
     {
         shapeDictionary = new Dictionary<Shapes, Shape>();
         shapeNames = new List<Shapes>();
         alreadyGeneratedObjects = new List<Shapes>();
+        tempShapes = new List<Shapes>();
         savedObjects = new List<SerializeTransform>();
         InitializeAllShapes();
         InstantiateAllShape();
@@ -48,6 +49,7 @@ public class Spawner : MonoBehaviour
             FakeShape.rd.sharedMaterial.SetColor("_Color", Random.ColorHSV());
             FakeShape = Instantiate(FakeShape, new Vector3(Random.Range(-10, 10), 18, Random.Range(-10, 10)), Quaternion.Euler(new Vector3(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360))));
             alreadyGeneratedObjects.Add(FakeShape);
+            tempShapes.Add(FakeShape);
         }
     }
     public Shapes GenerateRandomShape()
@@ -105,8 +107,8 @@ public class Spawner : MonoBehaviour
                     Quaternion angle = Quaternion.Euler(new Vector3(data._rotation[0], data._rotation[1], data._rotation[2]));
                     Vector3 position = new Vector3(data._position[0], data._position[1], data._position[2]);
                     shapeNames[i].rb.velocity = new Vector3(data._velocity[0], data._velocity[1], data._velocity[2]);
-                    Instantiate(shapeNames[i],position ,angle);
-                   
+                    Shapes fakeShape = Instantiate(shapeNames[i],position ,angle);
+                    tempShapes.Add(fakeShape);
                 }
             }
         }
@@ -129,8 +131,8 @@ public class Spawner : MonoBehaviour
                     Quaternion angle = Quaternion.Euler(new Vector3(data._rotation[0], data._rotation[1], data._rotation[2]));
                     Vector3 position = new Vector3(data._position[0], data._position[1], data._position[2]);
                     shapeNames[i].rb.velocity = new Vector3(data._velocity[0], data._velocity[1], data._velocity[2]);
-                    Instantiate(shapeNames[i], position, angle);
-
+                    Shapes fakeShape =  Instantiate(shapeNames[i], position, angle);
+                    tempShapes.Add(fakeShape);
                 }
             }
         }
@@ -138,7 +140,33 @@ public class Spawner : MonoBehaviour
 
 
     }
+    public  void loadDataFromJsonFile()
+    {
+        string jsonString ;
+        string path = Application.streamingAssetsPath + "/" + "ReedhamJson";
+        jsonString = File.ReadAllText(path);
+        List<SerializeTransform>  serializeTransforms = (List<SerializeTransform>) JsonHelper.FromJson<SerializeTransform>(jsonString);
 
+        foreach (SerializeTransform data in serializeTransforms)
+        {
+            for (int i = 0; i < shapeNames.Count; i++)
+            {
+                if (shapeNames[i].shape == data.shape)
+                {
+                    Quaternion angle = Quaternion.Euler(new Vector3(data._rotation[0], data._rotation[1], data._rotation[2]));
+                    Vector3 position = new Vector3(data._position[0], data._position[1], data._position[2]);
+                    shapeNames[i].rb.velocity = new Vector3(data._velocity[0], data._velocity[1], data._velocity[2]);
+                    Shapes fakeShape = Instantiate(shapeNames[i], position, angle);
+                    tempShapes.Add(fakeShape);
+                }
+            }
+        }
+
+        // StreamReader sr = new StreamReader(path);
+        // jsonString = sr;
+        //List<SerializeTransform> transforms = JsonUtility.FromJson(sr, typeof(List<SerializeTransform>));
+        //List<SerializeTransform> serializeTransforms = JsonHelper.FromJson()
+    }
     private void saveDataToDisk(string filePath, object toSave)
     {
         Debug.Log("DataSavingBinary");
@@ -162,15 +190,17 @@ public class Spawner : MonoBehaviour
         file.Close();
     }
 
-    private void SaveDataInJson(string filePath, object toSave)
+    private void SaveDataInJson(string filePath, List<SerializeTransform> toSave)
     {
         Debug.Log("DataSavingJson");
          
-        string jsonSave = JsonUtility.ToJson(toSave,true);
-       
-        string path = Application.streamingAssetsPath + "/" + filePath +".json";
+        //string jsonSave = JsonUtility.ToJson(toSave,true);
+       // Debug.Log(jsonSave);
+        string jsonHelper = JsonHelper.ToJson(toSave,true);
+        //Debug.Log(jsonHelper);
+        string path = Application.streamingAssetsPath + "/" + filePath ;
        // FileStream file = File.Create(path);
-        File.WriteAllText(path, jsonSave);
+        File.WriteAllText(path, jsonHelper);
       
        
     }
@@ -178,8 +208,13 @@ public class Spawner : MonoBehaviour
    
     public void DestoyAllGameObjects()
     {
-       
-        
+        for (int i = tempShapes.Count-1; i >= 0; i--)
+        {
+            Shapes fake = tempShapes[i];
+            tempShapes.RemoveAt(i);
+            Destroy(fake.gameObject);
+        }
+        InstantiateAllShape();
     }
 
 

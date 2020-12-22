@@ -1531,7 +1531,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 349260202}
         m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
-        m_MethodName: SpawnObjects
+        m_MethodName: DestoyAllGameObjects
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1765,7 +1765,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1671477310}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 349260202}
+        m_TargetAssemblyTypeName: Spawner, Assembly-CSharp
+        m_MethodName: loadDataFromJsonFile
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1671477310
 MonoBehaviour:
   m_ObjectHideFlags: 0
