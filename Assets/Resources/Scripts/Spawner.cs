@@ -62,22 +62,26 @@ public class Spawner : MonoBehaviour
         {
 
             SerializeTransform fakeTranform = new SerializeTransform();
-            fakeTranform._position[0] = alreadyGeneratedObjects[i].transform.position.x;
-            fakeTranform._position[1] = alreadyGeneratedObjects[i].transform.position.y;
-            fakeTranform._position[2] = alreadyGeneratedObjects[i].transform.position.z;
+            if (fakeTranform!=null)
+            {
+                fakeTranform._position[0] = alreadyGeneratedObjects[i].transform.position.x;
+                fakeTranform._position[1] = alreadyGeneratedObjects[i].transform.position.y;
+                fakeTranform._position[2] = alreadyGeneratedObjects[i].transform.position.z;
 
-            fakeTranform._rotation[0] = alreadyGeneratedObjects[i].transform.rotation.x;
-            fakeTranform._rotation[1] = alreadyGeneratedObjects[i].transform.rotation.y;
-            fakeTranform._rotation[2] = alreadyGeneratedObjects[i].transform.rotation.z;
+                fakeTranform._rotation[0] = alreadyGeneratedObjects[i].transform.rotation.x;
+                fakeTranform._rotation[1] = alreadyGeneratedObjects[i].transform.rotation.y;
+                fakeTranform._rotation[2] = alreadyGeneratedObjects[i].transform.rotation.z;
 
-            fakeTranform._velocity[0] = alreadyGeneratedObjects[i].rb.velocity.x;
-            fakeTranform._velocity[1] = alreadyGeneratedObjects[i].rb.velocity.y;
-            fakeTranform._velocity[2] = alreadyGeneratedObjects[i].rb.velocity.z;
+                fakeTranform._velocity[0] = alreadyGeneratedObjects[i].rb.velocity.x;
+                fakeTranform._velocity[1] = alreadyGeneratedObjects[i].rb.velocity.y;
+                fakeTranform._velocity[2] = alreadyGeneratedObjects[i].rb.velocity.z;
 
 
 
-            fakeTranform.shape = alreadyGeneratedObjects[i].shape;
-            savedObjects.Add(fakeTranform);
+                fakeTranform.shape = alreadyGeneratedObjects[i].shape;
+                savedObjects.Add(fakeTranform);
+            }
+           
         }
         return savedObjects;
     }
